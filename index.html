@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulacija DOM elementima</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        #login-container {
+            width: 460px;
+            margin: 0 auto;
+        }
+
+        form label,
+        form input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form input {
+            padding: 8px;
+        }
+
+        form label {
+            font-weight: bold;
+        }
+
+        form div {
+            margin: 16px 0px;
+        }
+
+        .invalid {
+            border: 2px solid red;
+        }
+
+        .valid {
+            border: 2px solid green;
+        }
+
+        #username-box {
+            position: relative;
+        }
+
+        #username-box i {
+            position: absolute;
+            right: 10px;
+            font-size: 30px;
+            top: 40%;
+        }
+
+        #password-box {
+            position: relative;
+        }
+
+        #password-box i {
+            position: absolute;
+            right: 10px;
+            font-size: 30px;
+            top: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="login-container">
+
+        <form id="forma">
+            <div id="username-box">
+                <label for="username">Username:</label>
+                <input id="username" type="text">
+            </div>
+
+            <div id="password-box">
+                <label for="password">Password:</label>
+                <input id="password" type="password">
+            </div>
+            <input type="submit" id="submit" value="Login">
+        </form>
+
+    </div>
+
+    <script>
+        let ButtonSubmit = document.getElementById("submit")
+        let paragraph1 = document.createElement("p")
+        let ispis1 = document.getElementById("forma").appendChild(paragraph1)
+        let paragraph2 = document.createElement("p")
+        let ispis2 = document.getElementById("forma").appendChild(paragraph2)
+        let faElement1 = document.createElement("i")
+        let faElement2 = document.createElement("i")
+        document.getElementById("username-box").appendChild(faElement1)
+        document.getElementById("password-box").appendChild(faElement2)
+
+        let user_valid = true
+        let pass_valid = true
+
+        ButtonSubmit.addEventListener("click", function (event) {
+
+            /**********RESET****************/
+
+
+            document.getElementById("username").classList.remove("invalid", "valid")
+            document.getElementById("password").classList.remove("invalid", "valid")
+            document.querySelector("#username-box i").classList.remove("fa", "fa-times", "fa-check")
+            document.querySelector("#password-box i").classList.remove("fa", "fa-times", "fa-check")
+            ispis1.innerHTML = ""
+            ispis2.innerHTML = ""
+
+            let username = document.getElementById("username")
+            let password = document.getElementById("password")
+
+            event.preventDefault() // Prevent form submission
+            if (username.value == "") {
+                username.classList.add("invalid")
+                ispis1.innerHTML = "please, enter username"
+                user_valid = false
+            } else if (username.value == "new_user") {
+                username.classList.add("valid")
+                faElement1.classList.add("fa", "fa-check")
+                faElement1.style.color = "green"
+                user_valid = true
+
+            } else {
+                username.classList.add("invalid")
+                faElement1.classList.add("fa", "fa-times")
+                ispis1.innerHTML = "please, enter valid username"
+                faElement1.style.color = "red"
+                user_valid = false
+            }
+
+            if (password.value == "") {
+                password.classList.add("invalid")
+                ispis2.innerHTML = "please, enter password"
+                pass_valid = false
+            } else if (password.value == "123456789") {
+                password.classList.add("valid")
+                faElement2.classList.add("fa", "fa-check")
+                faElement2.style.color = "green"
+                pass_valid = true
+
+            } else {
+                password.classList.add("invalid")
+                faElement2.classList.add("fa", "fa-times")
+                ispis2.innerHTML = "please, enter valid password"
+                faElement2.style.color = "red"
+                pass_valid = false
+            }
+
+            if (user_valid && pass_valid) {
+                ispis1.innerHTML = "Successful login!"
+            }
+        });
+    </script>
+
+
+
+</body>
+
+</html>
